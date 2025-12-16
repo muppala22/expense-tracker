@@ -1,0 +1,25 @@
+<div class="top-actions">
+  <button mat-raised-button color="primary" routerLink="/expenses/new">Add Expenses</button>
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search..."/>
+  </mat-form-field>
+</div>
+
+@if (!loading) {
+  <mat-list>
+    @for (e of expenses; track e.id) {
+      <mat-list-item>
+        <a [routerLink]="['/expenses', e.id]">
+          <h4 matLine>{{e.title}} - {{e.category}}</h4>
+          <p matLine>{{ e.amount | currency}} . {{e.date}}</p>
+        </a>
+      </mat-list-item>
+    }
+  </mat-list>
+}
+
+@if(!loading) {
+  <div>Loading...</div>
+}
+
