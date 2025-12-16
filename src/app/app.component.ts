@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -12,15 +12,11 @@ import {MatToolbar} from '@angular/material/toolbar';
   imports: [
     MatButton,
     MatIcon,
-    RouterLink,
-    RouterOutlet,
     MatToolbar
   ]
 })
 export class AppComponent {
   title = 'Expense Tracker';
 
-  openRepo() {
 
-  }
 }
