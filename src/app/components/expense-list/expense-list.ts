@@ -39,4 +39,13 @@ export class ExpenseList implements OnInit {
     });
   }
 
+confirmDelete(expense: Expense) {
+  this.dialog.open(ConfirmDialog)
+    .afterClosed()
+    .subscribe(result => {
+      if (result) {
+        this.delete(expense);
+      }
+    });
+
 }

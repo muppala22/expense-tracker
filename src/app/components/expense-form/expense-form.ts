@@ -46,19 +46,20 @@ export class ExpenseForm {
     }
   }
 
-  save() {
-    if (this.form.invalid) return;
-
-    const payload = this.form.getRawValue();
-
-    if (this.id) {
-      this.svc.updateExpense(this.id, payload)
-        .subscribe(() => this.router.navigate(['/expenses']));
-    } else {
-      this.svc.addExpense(payload)
-        .subscribe(() => this.router.navigate(['/expenses']));
-    }
+  loadExpenses() {
+    this.svc.getAll().subscribe(data => this.expenses.set(data));
   }
+
+  save(row: Expense) {
+    this.svc.update(row).subscribe(() => row.isEditing = false);
+  }
+
+  delete(row: Expense) {
+    this.svc.delete(row.id).subscribe(() => {
+      this.expenses.set(this.expenses().filter(e => e.id !== row.id));
+    });
+  }
+
 
 
 
