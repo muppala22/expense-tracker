@@ -1,33 +1,55 @@
-import {Component, OnInit} from '@angular/core';
-import {Expense} from '../../../models/expense.model';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ExpenseService} from '../../../services/expense-service';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
+import {Component, computed, signal} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ExpenseService } from '../../../services/expense-service';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { Expense } from '../../../models/expense.model';
 
 @Component({
   selector: 'app-expense-detail',
-  imports: [MatButtonModule,MatIconModule],
+  standalone: true,
+  imports: [MatButtonModule, MatIconModule, MatCardModule,MatDividerModule, CommonModule],
   templateUrl: './expense-detail.html',
-  styleUrl: './expense-detail.css',
+  styleUrls: ['./expense-detail.css']
 })
-export class ExpenseDetail implements OnInit {
+export class ExpenseDetailComponent {
 
-  expense: Expense | null = null;
-  constructor(private route: ActivatedRoute, private svc: ExpenseService, private router: Router){}
-  ngOnInit(): void {
-    const id = +(this.route.snapshot.paramMap.get('id') || 0);
-    if(id){
-      this.svc.getExpense(id).subscribe(e => this.expense = e);
-    }
-    throw new Error('Method not implemented.');
-  }
+  private id = signal<number>(0);
+
+  //signal based expense
+  expense = computed(() => this.svc.get(this.id()));
+
+  //signal based total
+  monthlyTotal   = computed(() => {
+    const e = this.expense();
+    if(!e) return 0;
+
+    const month = e.date.slice(0,7);
+    return this.svc.expenses()
+      .filter(x => x.category === e.category && x.date.startsWith(month))
+      .reduce((sum, x) => sum + x.amount, 0);
+  });
+
+  constructor(private svc: ExpenseService, private route: ActivatedRoute, private router: Router){}
 
   delete() {
-    if(!this.expense?.id) return;
-    if(!confirm('Delete this expense')) return;
-    this.svc.deleteExpense(this.expense.id).subscribe(() => this.router.navigate(['/expenses']));
+    const e = this.expense();
+    if (!e || !confirm('Delete this expense?')) return;
+    this.svc.delete(e.id);
+    this.router.navigate(['/expenses']);
   }
 
+  back() {
+    this.router.navigate(['/expenses']);
+  }
+
+  edit() {
+    const e = this.expense();
+    if (!e) return;
+    this.router.navigate(['/expenses', e.id, 'edit']);
+  }
 
 }

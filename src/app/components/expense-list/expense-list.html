@@ -1,64 +1,43 @@
-<div style="margin-bottom: 16px;">
-  <button mat-raised-button color="primary" (click)="toggleExpenses()">
-    {{ showTable ? 'Hide All Expenses' : 'Show All Expenses' }}
-  </button>
-</div>
+@if (showTable()) {
+  <table mat-table [dataSource]="expenses()" class="mat-elevation-z2">
 
-@if (showTable) {
-<table mat-table [dataSource]="expenses" class="mat-elevation-z2">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let e"> {{ e.title }} </td>
+    </ng-container>
 
-  <!-- Title -->
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef> Title </th>
-    <td mat-cell *matCellDef="let e"> {{ e.title }} </td>
-  </ng-container>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let e"> {{ e.category }} </td>
+    </ng-container>
 
-  <!-- Category -->
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef> Category </th>
-    <td mat-cell *matCellDef="let e"> {{ e.category }} </td>
-  </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <td mat-cell *matCellDef="let e">
+        {{ e.amount | currency }}
+      </td>
+    </ng-container>
 
-  <!-- Amount -->
-  <ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef> Amount </th>
-    <td mat-cell *matCellDef="let e">
-      {{ e.amount | currency }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let e"> {{ e.date }} </td>
+    </ng-container>
 
-  <!-- Date -->
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef> Date </th>
-    <td mat-cell *matCellDef="let e"> {{ e.date }} </td>
-  </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let e">
+        <button mat-icon-button color="primary" (click)="save(e)">
+          <mat-icon>check</mat-icon>
+        </button>
 
-  <!-- Actions -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Actions </th>
-    <td mat-cell *matCellDef="let e">
-      <button
-        mat-icon-button
-        color="primary"
-        (click)="save(e)"
-        aria-label="Save"
-      >
-        <mat-icon>check</mat-icon>
-      </button>
+        <button mat-icon-button color="warn" (click)="delete(e)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-      <button
-        mat-icon-button
-        color="warn"
-        (click)="delete(e)"
-        aria-label="Delete"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
+  </table>
 }

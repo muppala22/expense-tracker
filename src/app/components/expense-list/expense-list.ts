@@ -1,51 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-
+import {Component, computed, signal} from '@angular/core';
 import { ExpenseService } from '../../../services/expense-service';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
-import {Expense} from "../../../models/expense.model";
-import {CurrencyPipe} from "@angular/common";
-import {MatButton} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
-import {MatLine} from "@angular/material/core";
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';``
+import {CurrencyPipe} from '@angular/common';
+import {Expense} from '../../../models/expense.model';
+import {MatTable, MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-expense-list',
   standalone: true,
   imports: [
+    RouterModule,
+    MatListModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatListModule,
     CurrencyPipe,
-    MatButton,
-    RouterLink,
-    MatLine
+    MatTable,
+    MatTableModule,
+    MatIconModule
   ],
-  templateUrl: './expense-list.html'
+  templateUrl: './expense-list.html',
+  styleUrls: ['./expense-list.css']
 })
-export class ExpenseList implements OnInit {
+export class ExpenseListComponent  {
 
-  expenses: Expense[] =[];
-  loading = true;
+  constructor(private svc: ExpenseService) {this.expenses = this.svc.expenses;}
 
-  constructor(private svc: ExpenseService) {}
+  expenses!: typeof this.svc.expenses;
+  showTable = signal(false);
 
-  ngOnInit(): void {
-    this.svc.getAll().subscribe({
-      next: data => {this.expenses = data; this.loading = false;},
-      error: err => {console.error(err); this.loading = false;}
-    });
+  displayedColumns = ['title', 'category', 'amount', 'date', 'actions'];
+
+
+
+  toggleExpenses() {
+    this.showTable.update(v => !v);
   }
 
-confirmDelete(expense: Expense) {
-  this.dialog.open(ConfirmDialog)
-    .afterClosed()
-    .subscribe(result => {
-      if (result) {
-        this.delete(expense);
-      }
-    });
+  save(e: Expense) {
+    this.svc.update(e.id, e);
+  }
 
+  delete(e: Expense) {
+    if (!confirm('Delete this expense?')) return;
+    this.svc.delete(e.id);
+  }
 }

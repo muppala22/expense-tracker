@@ -1,36 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { Expense } from '../../../models/expense.model';
 import { ExpenseService } from '../../../services/expense-service';
-import {Router, ActivatedRoute, RouterModule, RouterLink} from '@angular/router';
-import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
-import {MatInput, MatInputModule} from '@angular/material/input';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-expense-form',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
+    CommonModule,
+    RouterModule,
     MatFormFieldModule,
-      MatInputModule,
-    MatInput,
-    MatSelect,
-    MatOption,
-    MatButton,
-    RouterLink
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule
   ],
   templateUrl: './expense-form.html',
-  styleUrl: './expense-form.css',
+  styleUrls: ['./expense-form.css']
 })
-export class ExpenseForm {
-  form = this["fb"].nonNullable.group({
-    title: ['', Validators.required],
-    amount: [0, [Validators.required, Validators.min(0.01)]],
-    category: ['', Validators.required],
-    date: ['', Validators.required]
-  });
+export class ExpenseFormComponent {
 
-
+  form!: ReturnType<FormBuilder['group']>;
+  expenses!: typeof this.svc.expenses;
   private id: number | null = null;
 
   constructor(
@@ -39,28 +36,44 @@ export class ExpenseForm {
     private router: Router,
     private route: ActivatedRoute
   ){
+
+    this.form = this.fb.group({
+      id: [0],
+      title: ['', Validators.required],
+      amount: [0, [Validators.required, Validators.min(0.01)]],
+      category: ['', Validators.required],
+      date: ['', Validators.required]
+    });
+    // safe to use svc here
+    this.expenses = this.svc.expenses;
+
     const idParam = this.route.snapshot.paramMap.get('id');
+
     if (idParam) {
       this.id = +idParam;
-      this.svc.getExpense(this.id).subscribe(e => this.form.patchValue(e));
+      // read from signal store
+      const exp = this.svc.get(this.id);
+      if(exp) {
+        this.form.patchValue(exp)
+      }
     }
   }
 
-  loadExpenses() {
-    this.svc.getAll().subscribe(data => this.expenses.set(data));
+  save(){
+    if (this.form.invalid) return;
+
+    const payload: Expense = {
+      id: this.id ?? 0,
+      title: this.form.value.title ?? '',
+      amount: this.form.value.amount ?? 0,
+      category: this.form.value.category ?? '',
+      date: this.form.value.date ?? ''
+    };
+    if (this.id) {
+      this.svc.update(this.id, payload);
+    } else {
+      this.svc.create(payload);
+    }
+    this.router.navigate(['/expenses']);
   }
-
-  save(row: Expense) {
-    this.svc.update(row).subscribe(() => row.isEditing = false);
-  }
-
-  delete(row: Expense) {
-    this.svc.delete(row.id).subscribe(() => {
-      this.expenses.set(this.expenses().filter(e => e.id !== row.id));
-    });
-  }
-
-
-
-
 }

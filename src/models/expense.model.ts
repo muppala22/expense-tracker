@@ -1,7 +1,9 @@
 export interface Expense {
-  id?: number;
+  id: number;
   title: string;
   amount: number;
   category: string;
   date: string;  //ISO YYYY-MM-DD
+  isEditing?: boolean;
+
 }

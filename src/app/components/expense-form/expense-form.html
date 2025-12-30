@@ -1,22 +1,36 @@
-<form [formGroup] ="form" (ngSubmit)="save()">
-  <mat-form-field appearance="outline" class="full">
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title"/>
-     @if (form.controls['title'].hasError('required')) {
-       <mat-error>Title is required</mat-error>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="form-fields">
+    @if (expenses.length > 0) {
+      <mat-form-field appearance="outline">
+        <mat-label>Select Expense</mat-label>
+        <mat-select>
+          @for (expense of expenses(); track expense.id) {
+            <mat-option [value]="expense.id">{{ expense.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     }
-  </mat-form-field>
+    <div class="form-group">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title"/>
+        @if (form.controls['title'].hasError('required')) {
+          <mat-error>Title is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Amount</mat-label>
-    <input matInput type="number" formControlName="amount"/>
-    @if (form.controls['amount'].hasError('min')) {
-      <mat-error>Amount must be positive</mat-error>
-    }
-  </mat-form-field>
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" formControlName="amount"/>
+        @if (form.controls['amount'].hasError('min')) {
+          <mat-error>Amount must be positive</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Category<</mat-label>
+      <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
     <mat-select formControlName="category">
       <mat-option value="Food">Food</mat-option>
       <mat-option value="Transport">Transport</mat-option>
@@ -24,15 +38,18 @@
       <mat-option value="Other">Other</mat-option>
     </mat-select>
   </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Date</mat-label>
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
     <input matInput type="date" formControlName="date" />
-  </mat-form-field>
+      </mat-form-field>
+    </div>
 
-
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Save</button>
-    <button mat-raised-button routerLink="/expenses"> Cancel</button>
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button routerLink="/expenses">Cancel</button>
+    </div>
   </div>
 </form>
