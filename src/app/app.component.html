@@ -1,10 +1,9 @@
 <mat-toolbar color="primary">
-  <span>{{title}}</span>
+  <span>Expense Tracker</span>
   <span class="spacer"></span>
-  <button mat-button>Expenses</button>
-    <mat-icon>code</mat-icon>
+  <button mat-button routerLink="/expenses"><mat-icon>receipt_long</mat-icon>Expenses</button>
 </mat-toolbar>
 
-
 <div class="container">
+  <router-outlet></router-outlet>
 </div>

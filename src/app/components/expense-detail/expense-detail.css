@@ -1,1 +1,55 @@
-.actions { display:flex; gap:8px; }
+.expense-detail {
+  max-width: 600px;
+  margin: 24px auto;
+}
+
+.detail-row {
+  margin: 12px 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.detail-row strong {
+  display: inline-block;
+  min-width: 100px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.monthly-total {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.monthly-total h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.total-amount {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+mat-card-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+mat-divider {
+  margin: 16px 0;
+}

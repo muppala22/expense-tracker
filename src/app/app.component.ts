@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {MatToolbar} from '@angular/material/toolbar';
 
@@ -11,8 +11,9 @@ import {MatToolbar} from '@angular/material/toolbar';
   styleUrls: ['./app.component.css'],
   imports: [
     MatButton,
-    MatIcon,
-    MatToolbar
+    MatIconModule,
+    MatToolbar,
+    RouterOutlet
   ]
 })
 export class AppComponent {

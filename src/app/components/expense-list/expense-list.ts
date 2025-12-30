@@ -5,7 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';``
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Expense} from '../../../models/expense.model';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
@@ -22,7 +22,7 @@ import {MatIconModule} from '@angular/material/icon';
     CurrencyPipe,
     MatTable,
     MatTableModule,
-    MatIconModule
+    MatIconModule, DatePipe
   ],
   templateUrl: './expense-list.html',
   styleUrls: ['./expense-list.css']

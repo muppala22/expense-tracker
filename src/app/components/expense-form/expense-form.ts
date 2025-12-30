@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';  // ADD THIS LINE
 import { Expense } from '../../../models/expense.model';
 import { ExpenseService } from '../../../services/expense-service';
 
@@ -19,7 +20,8 @@ import { ExpenseService } from '../../../services/expense-service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule  // ADD THIS LINE
   ],
   templateUrl: './expense-form.html',
   styleUrls: ['./expense-form.css']
@@ -29,6 +31,9 @@ export class ExpenseFormComponent {
   form!: ReturnType<FormBuilder['group']>;
   expenses!: typeof this.svc.expenses;
   private id: number | null = null;
+
+
+  isEditMode = computed(() => this.id !== null);
 
   constructor(
     private fb: FormBuilder,
