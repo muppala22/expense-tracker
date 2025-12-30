@@ -33,7 +33,14 @@ export class ExpenseDetailComponent {
       .reduce((sum, x) => sum + x.amount, 0);
   });
 
-  constructor(private svc: ExpenseService, private route: ActivatedRoute, private router: Router){}
+  constructor(private svc: ExpenseService, private route: ActivatedRoute, private router: Router){
+    // Extract the ID from route parameters
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.id.set(+idParam); // Convert to number and set the signal
+    }
+
+  }
 
   delete() {
     const e = this.expense();

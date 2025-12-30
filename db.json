@@ -1,6 +1,25 @@
 {
   "expenses": [
-    { "id": 1, "title": "Lunch", "amount": 12.5, "category": "Food", "date": "2025-12-10" },
-    { "id": 2, "title": "Uber", "amount": 23.8, "category": "Transport", "date": "2025-12-09" }
+    {
+      "id": 2,
+      "title": "Uber",
+      "amount": 23.8,
+      "category": "Transport",
+      "date": "2025-12-09"
+    },
+    {
+      "id": 3,
+      "title": "Lunch",
+      "amount": 20,
+      "category": "Food",
+      "date": "2025-12-05"
+    },
+    {
+      "id": 4,
+      "title": "Lunch with Mom",
+      "amount": 40,
+      "category": "Food",
+      "date": "2025-12-20"
+    }
   ]
 }

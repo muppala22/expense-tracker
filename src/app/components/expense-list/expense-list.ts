@@ -29,18 +29,12 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class ExpenseListComponent  {
 
-  constructor(private svc: ExpenseService) {this.expenses = this.svc.expenses;}
+  constructor(private svc: ExpenseService) {}
 
-  expenses!: typeof this.svc.expenses;
-  showTable = signal(false);
+  expenses = computed(() => this.svc.expenses());
+  showTable = computed(() => this.expenses().length > 0);
 
   displayedColumns = ['title', 'category', 'amount', 'date', 'actions'];
-
-
-
-  toggleExpenses() {
-    this.showTable.update(v => !v);
-  }
 
   save(e: Expense) {
     this.svc.update(e.id, e);
