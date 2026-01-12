@@ -1,42 +1,132 @@
-@if (expense()) {
-  <mat-card class="expense-detail">
+<!-- expense-detail.html - IMPROVED VERSION -->
+<div class="expense-detail-wrapper">
+  @if (expense()) {
+    <div class="expense-detail-container">
 
-    <mat-card-title>{{ expense()!.title }}</mat-card-title>
-
-    <mat-card-content>
-      <p class="detail-row">
-        <strong>Category:</strong> {{ expense()!.category }}
-      </p>
-
-      <p class="detail-row">
-        <strong>Amount:</strong> {{ expense()!.amount | currency }}
-      </p>
-
-      <p class="detail-row">
-        <strong>Date:</strong> {{ expense()!.date }}
-      </p>
-
-      <div class="monthly-total">
-        <h4>Monthly Total for {{ expense()!.category }}</h4>
-        <p class="total-amount">{{ monthlyTotal() | currency }}</p>
+      <!-- Header Section -->
+      <div class="detail-header">
+        <button mat-icon-button class="back-button" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="header-content">
+          <h1>{{ expense()!.title }}</h1>
+          <div class="header-meta">
+            <span class="category-badge" [attr.data-category]="expense()!.category">
+              <mat-icon>category</mat-icon>
+              {{ expense()!.category }}
+            </span>
+            <span class="date-badge">
+              <mat-icon>event</mat-icon>
+              {{ expense()!.date | date:'MMMM d, y' }}
+            </span>
+          </div>
+        </div>
       </div>
-    </mat-card-content>
 
-    <mat-divider></mat-divider>
+      <!-- Amount Card -->
+      <div class="amount-card">
+        <div class="amount-label">Expense Amount</div>
+        <div class="amount-display">{{ expense()!.amount | currency }}</div>
+        <div class="amount-info">
+          <mat-icon>info_outline</mat-icon>
+          <span>This transaction was recorded on {{ expense()!.date | date:'shortDate' }}</span>
+        </div>
+      </div>
 
-    <mat-card-actions>
-      <button mat-button (click)="back()">Back</button>
+      <!-- Monthly Summary Card -->
+      <div class="monthly-summary">
+        <div class="summary-header">
+          <mat-icon>pie_chart</mat-icon>
+          <h3>Monthly Summary for {{ expense()!.category }}</h3>
+        </div>
+        <div class="summary-content">
+          <div class="summary-stat">
+            <span class="stat-label">Total Spent This Month</span>
+            <span class="stat-value">{{ monthlyTotal() | currency }}</span>
+          </div>
+          <div class="summary-visual">
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+            </div>
+            <span class="progress-label">
+              {{ expense()!.amount | currency }} of {{ monthlyTotal() | currency }}
+            </span>
+          </div>
+        </div>
+      </div>
 
-      <button mat-raised-button color="primary" (click)="edit()">
-        <mat-icon>edit</mat-icon>
-        Edit
+      <!-- Details Grid -->
+      <div class="details-grid">
+        <div class="detail-card">
+          <div class="detail-icon">
+            <mat-icon>title</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Title</span>
+            <span class="detail-value">{{ expense()!.title }}</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <mat-icon>attach_money</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Amount</span>
+            <span class="detail-value">{{ expense()!.amount | currency }}</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <mat-icon>category</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Category</span>
+            <span class="detail-value">{{ expense()!.category }}</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <mat-icon>event</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Date</span>
+            <span class="detail-value">{{ expense()!.date | date:'fullDate' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-section">
+        <button mat-stroked-button class="action-button secondary" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to List
+        </button>
+
+        <div class="primary-actions">
+          <button mat-raised-button color="primary" class="action-button" (click)="edit()">
+            <mat-icon>edit</mat-icon>
+            Edit Expense
+          </button>
+
+          <button mat-raised-button color="warn" class="action-button" (click)="delete()">
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </div>
+      </div>
+
+    </div>
+  } @else {
+    <div class="not-found">
+      <mat-icon>error_outline</mat-icon>
+      <h3>Expense Not Found</h3>
+      <p>The expense you're looking for doesn't exist.</p>
+      <button mat-raised-button color="primary" (click)="back()">
+        Back to List
       </button>
-
-      <button mat-raised-button color="warn" (click)="delete()">
-        <mat-icon>delete</mat-icon>
-        Delete
-      </button>
-    </mat-card-actions>
-
-  </mat-card>
-}
+    </div>
+  }
+</div>

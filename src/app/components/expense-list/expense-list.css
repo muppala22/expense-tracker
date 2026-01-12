@@ -1,62 +1,373 @@
+/* expense-list.css - IMPROVED VERSION */
+
 .expense-list-container {
-  padding: 24px;
-  max-width: 1200px;
+  padding: 32px;
+  max-width: 1400px;
   margin: 0 auto;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: calc(100vh - 64px);
 }
 
 .header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header-section h2 {
+.header-content h2 {
   margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  margin: 4px 0 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.add-button {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+.add-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.total-card {
+  border-left-color: #667eea;
+}
+
+.average-card {
+  border-left-color: #f093fb;
+}
+
+.highest-card {
+  border-left-color: #4facfe;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.total-card .card-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.average-card .card-icon {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.highest-card .card-icon {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.card-icon mat-icon {
+  color: white;
   font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-label {
+  font-size: 13px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   font-weight: 500;
 }
 
-table {
+.card-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.card-info {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Filter Section */
+.filter-section {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-field,
+.filter-field {
+  flex: 1;
+}
+
+.search-field {
+  max-width: 400px;
+}
+
+.filter-field {
+  max-width: 300px;
+}
+
+/* Table Container */
+.table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.expense-table {
   width: 100%;
 }
 
 .mat-mdc-header-cell {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
   font-weight: 600;
   font-size: 14px;
+  padding: 16px !important;
+  border: none !important;
+}
+
+.header-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.mat-mdc-cell {
+  padding: 20px 16px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.expense-row {
+  transition: all 0.2s ease;
+}
+
+.expense-row:hover {
+  background-color: #f8f9ff !important;
+  transform: scale(1.01);
 }
 
 .expense-link {
-  color: #1976d2;
+  color: #667eea;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
 
 .expense-link:hover {
-  text-decoration: underline;
+  color: #764ba2;
+  transform: translateX(4px);
 }
 
+.expense-title {
+  display: inline-block;
+}
+
+/* Category Badges */
+.category-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.category-badge[data-category="Food"] {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.category-badge[data-category="Transport"] {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.category-badge[data-category="Utilities"] {
+  background: #f3e5f5;
+  color: #4a148c;
+}
+
+.category-badge[data-category="Entertainment"] {
+  background: #fce4ec;
+  color: #880e4f;
+}
+
+.category-badge[data-category="Shopping"] {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.category-badge[data-category="Other"] {
+  background: #f5f5f5;
+  color: #424242;
+}
+
+.amount-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.date-value {
+  color: #666;
+  font-size: 14px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+/* Empty State */
 .empty-state {
   text-align: center;
-  padding: 80px 20px;
-  color: rgba(0, 0, 0, 0.6);
+  padding: 100px 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.empty-icon-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty-icon {
   font-size: 64px;
   width: 64px;
   height: 64px;
-  margin: 0 auto 16px;
-  opacity: 0.5;
+  color: white;
 }
 
 .empty-state h3 {
-  margin: 16px 0 8px;
-  font-size: 24px;
-  color: rgba(0, 0, 0, 0.87);
+  margin: 24px 0 12px;
+  font-size: 28px;
+  color: #1a1a1a;
+  font-weight: 600;
 }
 
 .empty-state p {
-  margin: 0;
+  margin: 0 0 32px;
   font-size: 16px;
+  color: #666;
+}
+
+.empty-state-button {
+  height: 48px;
+  padding: 0 32px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .expense-list-container {
+    padding: 16px;
+  }
+
+  .header-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    width: 100%;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-section {
+    flex-direction: column;
+  }
+
+  .search-field,
+  .filter-field {
+    max-width: 100%;
+  }
+
+  .expense-table {
+    font-size: 14px;
+  }
+
+  .mat-mdc-header-cell,
+  .mat-mdc-cell {
+    padding: 12px 8px !important;
+  }
 }

@@ -1,9 +1,28 @@
-<mat-toolbar color="primary">
-  <span>Expense Tracker</span>
-  <span class="spacer"></span>
-  <button mat-button routerLink="/expenses"><mat-icon>receipt_long</mat-icon>Expenses</button>
-</mat-toolbar>
+<!-- app.component.html - IMPROVED VERSION -->
+<div class="app-container">
+  <mat-toolbar class="app-toolbar">
+    <div class="toolbar-content">
+      <div class="brand">
+        <mat-icon class="brand-icon">account_balance_wallet</mat-icon>
+        <span class="brand-text">Expense Tracker</span>
+      </div>
 
-<div class="container">
-  <router-outlet></router-outlet>
+      <nav class="nav-menu">
+        <button mat-button routerLink="/expenses" routerLinkActive="active-link" class="nav-button">
+          <mat-icon>receipt_long</mat-icon>
+          <span>Expenses</span>
+        </button>
+      </nav>
+    </div>
+  </mat-toolbar>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>© 2026 Expense Tracker | Manage your finances with ease</p>
+    </div>
+  </footer>
 </div>
