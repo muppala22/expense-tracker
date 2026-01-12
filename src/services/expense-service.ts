@@ -5,7 +5,10 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ExpenseService {
-  private api = 'http://localhost:3000/expenses';
+  private api = 'https://expense-tracker-api.onrender.com/expenses';
+
+  // For local development, you can use:
+  // private api = 'http://localhost:3000/expenses';
   constructor(private http: HttpClient) {
     this.load(); // auto-load on startup
   }
