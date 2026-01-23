@@ -1,0 +1,71 @@
+<div class="dashboard-container">
+  <!-- Summary Cards Row -->
+  <div class="summary-cards">
+    <mat-card class="summary-card">
+      <mat-icon class="card-icon">account_balance_wallet</mat-icon>
+      <div class="card-content">
+        <h3>Total Expenses</h3>
+        <p class="amount">{{ totalExpenses | currency }}</p>
+      </div>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-icon class="card-icon">date_range</mat-icon>
+      <div class="card-content">
+        <h3>This Month</h3>
+        <p class="amount">{{ monthlyExpenses | currency }}</p>
+      </div>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-icon class="card-icon">trending_up</mat-icon>
+      <div class="card-content">
+        <h3>Highest Category</h3>
+        <p>{{ highestCategory }}</p>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-row">
+    <mat-card class="chart-card">
+      <h3>Expenses by Category</h3>
+      <!-- Integrate with Chart.js or ngx-charts -->
+      <canvas id="categoryChart"></canvas>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Monthly Trend</h3>
+      <canvas id="trendChart"></canvas>
+    </mat-card>
+  </div>
+
+  <!-- Recent Expenses -->
+  <mat-card class="recent-expenses">
+    <div class="card-header">
+      <h3>Recent Expenses</h3>
+      <a mat-button color="primary" routerLink="/expenses">View All</a>
+    </div>
+    <!-- List of 5 most recent expenses -->
+    <mat-list>
+      <div *ngIf="recentExpenses.length === 0" class="empty-state">
+        <p>No recent expenses</p>
+      </div>
+      <mat-list-item *ngFor="let expense of recentExpenses">
+        <div class="expense-item">
+          <div class="expense-icon">
+            <mat-icon>{{ getCategoryIcon(expense.category) }}</mat-icon>
+          </div>
+          <div class="expense-details">
+            <h4>{{ expense.title }}</h4>
+            <p>{{ expense.category }} • {{ expense.date | date:'mediumDate' }}</p>
+          </div>
+          <div class="expense-amount">
+            {{ expense.amount | currency }}
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>
